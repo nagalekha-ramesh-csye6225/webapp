@@ -6,4 +6,4 @@ const sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_
     dialect: process.env.DATABASE_DIALECT,
 });
 
-module.exports = { sequelize };
+module.exports = sequelize;
