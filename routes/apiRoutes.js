@@ -3,18 +3,19 @@ const healthzController = require('../controllers/controller');
 const validateNoPayload = require('../middleware/validateNoPayload');
 const validateNoQueryParams = require('../middleware/validateNoQueryParams');
 const handleMethodNotAllowed = require('../middleware/handleMethodNotAllowed')
+const alterHeaders = require('../middleware/alterHeaders')
 
 const router = express.Router();
 
 //Handling Method Not Allowed Explicitly
-router.post('/healthz', handleMethodNotAllowed);
-router.put('/healthz', handleMethodNotAllowed);
-router.patch('/healthz', handleMethodNotAllowed);
-router.delete('/healthz', handleMethodNotAllowed);
-router.head('/healthz', handleMethodNotAllowed);
-router.options('/healthz', handleMethodNotAllowed);
+router.post('/healthz', alterHeaders, handleMethodNotAllowed);
+router.put('/healthz', alterHeaders, handleMethodNotAllowed);
+router.patch('/healthz', alterHeaders, handleMethodNotAllowed);
+router.delete('/healthz', alterHeaders, handleMethodNotAllowed);
+router.head('/healthz', alterHeaders, handleMethodNotAllowed);
+router.options('/healthz', alterHeaders, handleMethodNotAllowed);
 
 //Health Check Route Definition
-router.get('/healthz', validateNoPayload, validateNoQueryParams, healthzController.healthCheck);
+router.get('/healthz', alterHeaders, validateNoPayload, validateNoQueryParams, healthzController.healthCheck);
 
 module.exports = router;
