@@ -14,8 +14,8 @@ async function createUserAccount(req, res) {
             password: hashedPassword,
             first_name,
             last_name,
-            account_created: Sequelize.literal('CURRENT_TIMESTAMP'),
-            account_updated: Sequelize.literal('CURRENT_TIMESTAMP')
+            // account_created: Sequelize.literal('CURRENT_TIMESTAMP'),
+            // account_updated: Sequelize.literal('CURRENT_TIMESTAMP')
         });
 
         // Omit password from the response payload
