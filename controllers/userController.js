@@ -28,6 +28,21 @@ async function createUserAccount(req, res) {
     }
 }
 
+const getUserAccountDetails= (req, res) => {
+
+    try{
+        const userJson = req.user;
+        delete userJson.dataValues.password;
+    
+        res.status(200).json(userJson);
+    } catch (error) {
+        console.error('Error fetching user details:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+
+}
+
 module.exports = {
-    createUserAccount
+    createUserAccount,
+    getUserAccountDetails
 };
