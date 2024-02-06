@@ -43,7 +43,9 @@ const User = sequelize.define('User', {
             unique: true,
             fields: ['username']
         }
-    ]
+    ],
+    updatedAt: 'account_updated', // Map updatedAt to account_updated
+    createdAt: 'account_created', // Map createdAt to account_created
 });
 
 module.exports = User;
