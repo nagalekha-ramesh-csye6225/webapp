@@ -24,8 +24,6 @@ const authenticateToken = async (req, res, next) => {
         return res.status(401).send();
     }
 
-    console.log("Username : Pass : ", username, password)
-
     try{
         //retrieve user from the database based on username
         const user = await findUserByUsername(username);
@@ -56,18 +54,5 @@ const authenticateToken = async (req, res, next) => {
             return res.status(500).json({ message: 'Internal server error' });
         }        
     }
-
-
-
-    // console.log("User, Password : ", user, pass)
-
-
-
-    // console.log("enforcing Basic Auth", authHeader, authHeader.startsWith('Basic'))
-
-
-    // return res.status(200).send();
-
-    // next();
 }
 module.exports = { authenticateToken }
