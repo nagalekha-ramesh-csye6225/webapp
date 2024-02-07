@@ -58,6 +58,8 @@ const updateUserAccountDetails = async (req, res) => {
         const authenticatedUser = req.user;
         const { first_name, last_name, password } = req.body;
 
+        console.log(first_name, last_name, password)
+
         // Hash the new password if provided
         let hashedPassword;
         if (password) {

@@ -3,4 +3,14 @@ const validateUsername = (username) => {
     return usernameRegex.test(username);
 }
 
-module.exports = { validateUsername };
+const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+    return passwordRegex.test(password);
+}
+
+const validateName = (name) => {
+    const nameRegex = /^[A-Za-z]+$/
+    return nameRegex.test(name);
+}
+
+module.exports = { validateUsername, validatePassword, validateName };
