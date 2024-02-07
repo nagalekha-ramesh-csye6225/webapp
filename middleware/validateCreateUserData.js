@@ -6,6 +6,10 @@ const validateCreateUserData = (req, res, next) => {
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
 
+    // TODO
+    // suppose if i pass another key in payload, ex country
+    //what are we supposed to do for this? throw error or ignore
+    
     console.log(username, password, first_name, last_name);
 
     if(username === undefined || password === undefined || first_name === undefined || last_name === undefined){

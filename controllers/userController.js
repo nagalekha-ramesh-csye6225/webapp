@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { createUser } = require('../repositories/userRepository');
+const { createUser, updateUserById, findUserByUsername } = require('../repositories/userRepository');
 const Sequelize = require('sequelize')
 
 async function createUserAccount(req, res) {
@@ -23,8 +23,14 @@ async function createUserAccount(req, res) {
 
         res.status(201).json(newUser);
     } catch (error) {
-        console.error('Error creating user:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        if(error.name && error.name === 'SequelizeConnectionRefusedError'){
+            console.error('Database connection error: ', error);
+            return res.status(503).send();
+        }
+        else{
+            console.error('Error creating user:', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }    
     }
 }
 
@@ -36,13 +42,55 @@ const getUserAccountDetails= (req, res) => {
     
         res.status(200).json(userJson);
     } catch (error) {
-        console.error('Error fetching user details:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        if(error.name && error.name === 'SequelizeConnectionRefusedError'){
+            console.error('Database connection error: ', error);
+            return res.status(503).send();
+        }
+        else{
+            console.error('Error fetching user details:', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }   
     }
+}
 
+const updateUserAccountDetails = async (req, res) => {
+    try{
+        const authenticatedUser = req.user;
+        const { first_name, last_name, password } = req.body;
+
+        // Hash the new password if provided
+        let hashedPassword;
+        if (password) {
+            hashedPassword = await bcrypt.hash(password, 10);
+        }
+
+        // Prepare the updated user data
+        const updatedUserData = {};
+        if (first_name) updatedUserData.first_name = first_name;
+        if (last_name) updatedUserData.last_name = last_name;
+        if (hashedPassword) updatedUserData.password = hashedPassword;
+        updatedUserData.account_updated = new Date();
+
+        // Update user information in the database
+        const updatedUser = await updateUserById(authenticatedUser.id, updatedUserData);
+
+        // Return 204 No Content on successful update
+        res.status(204).send();
+
+    } catch(error) {
+        if(error.name && error.name === 'SequelizeConnectionRefusedError'){
+            console.error('Database connection error: ', error);
+            return res.status(503).send();
+        }
+        else{
+            console.error('Error updating user details:', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }   
+    }
 }
 
 module.exports = {
     createUserAccount,
-    getUserAccountDetails
+    getUserAccountDetails,
+    updateUserAccountDetails
 };
