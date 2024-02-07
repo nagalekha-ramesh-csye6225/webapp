@@ -31,4 +31,4 @@ router.post('/', validateNoQueryParams, validateCreateUserData, validateUser, cr
 router.get('/self', authenticateToken, validateNoQueryParams, getUserAccountDetails);
 router.put('/self', authenticateToken, validateNoQueryParams, validateUpdateUserData, updateUserAccountDetails);
 
-module.exports = router;
+module.exports = { router };
