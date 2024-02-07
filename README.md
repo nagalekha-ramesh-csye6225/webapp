@@ -29,7 +29,7 @@ This repository contains an Express.js application designed for a basic health c
 
 - Separation of Concerns
 - File Structure for Node.js application based on Separation of Concerns
-- Currying in JavaScript
+- Currying | Javascript
 
 ## References:
 
