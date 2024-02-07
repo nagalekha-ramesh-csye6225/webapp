@@ -2,7 +2,7 @@
 
 # CSYE 6225
 
-This repository contains an Express.js application designed for a basic health check API endpoint. Below is an overview of the files and their functionalities:
+This repository contains an Express.js application designed for a basic health check API endpoint. Below is an overview of the files and their functionalities-
 
 ## Usage:
 
