@@ -1,17 +1,42 @@
-name: On Commit Workflow
+name: CI-Workflow
 
 on:
   push:
     branches:
       - assignment-02
 
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: ${{ secrets.DATABASE_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
+        ports:
+          - 5432:5432
 
-    - name: Print Hello World
-      run: echo "Hello World"
+    strategy:
+      matrix:
+        node-version: [16.x]
+    env:
+      PORT: ${{ secrets.PORT }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+      DATABASE_DIALECT: ${{ secrets.DATABASE_DIALECT }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm test
