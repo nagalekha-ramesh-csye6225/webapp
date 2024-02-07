@@ -9,7 +9,7 @@ This repository contains an Express.js application designed for a basic health c
 1. Clone the repository to your local environment.
 2. Install dependencies using `npm install`.
 3. Set up your PostgreSQL database with the name 'assignment_01' and adjust the database credentials in `database.js` if necessary.
-4. Run the application using `npm start` or `npm run node-start`.
+4. Run the application using `npm start` or `npm run dev`.
 5. Access the health check endpoint at `http://localhost:8080/healthz`.
 
 ## Dependencies:

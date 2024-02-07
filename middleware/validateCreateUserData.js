@@ -6,6 +6,12 @@ const validateCreateUserData = (req, res, next) => {
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
 
+    // Validate if any other field is attempted to be updated
+    const invalidFields = Object.keys(req.body).filter(field => !['first_name', 'last_name', 'password', 'username', 'account_created', 'account_updated'].includes(field));
+    if (invalidFields.length > 0) {
+        return res.status(400).json({ message: 'Invalid field(s) for update: ' + invalidFields.join(', ') });
+    }
+
 
     // TODO
     // suppose if i pass another key in payload, ex country
