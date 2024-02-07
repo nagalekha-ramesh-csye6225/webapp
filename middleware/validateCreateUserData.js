@@ -10,8 +10,6 @@ const validateCreateUserData = (req, res, next) => {
     // suppose if i pass another key in payload, ex country
     //what are we supposed to do for this? throw error or ignore
     
-    console.log(username, password, first_name, last_name);
-
     if(username === undefined || password === undefined || first_name === undefined || last_name === undefined){
         return res.status(400).send({error: 'Missing required fields'});
     }
