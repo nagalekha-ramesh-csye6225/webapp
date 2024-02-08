@@ -11,11 +11,6 @@ const validateCreateUserData = (req, res, next) => {
     if (invalidFields.length > 0) {
         return res.status(400).json({ message: 'Invalid field(s) for update: ' + invalidFields.join(', ') });
     }
-
-
-    // TODO
-    // suppose if i pass another key in payload, ex country
-    //what are we supposed to do for this? throw error or ignore
     
     if(username === undefined || password === undefined || first_name === undefined || last_name === undefined){
         return res.status(400).send({error: 'Missing required fields'});
