@@ -1,42 +1,64 @@
-# fork-cloud-webapp
+## GitHub Repository Setup for Web Applications
 
-# CSYE 6225
+### Overview
+This repository serves as a template for setting up web applications on GitHub. It includes guidelines for repository organization, branch protection rules, API requirements, authentication, and continuous integration (CI) setup using GitHub Actions.
 
-This repository contains an Express.js application designed for a basic health check API endpoint. Below is an overview of the files and their functionalities-
+### Repository Structure
+- **webapp/**
+  - Contains the source code and configuration files for the web application.
+- **README.md**
+  - Instructions and guidelines for building, deploying, and contributing to the web application.
 
-## Usage:
+### Prerequisites
+Before building and deploying the web application locally, ensure you have the following prerequisites installed:
+- [List your prerequisites here]
 
-1. Clone the repository to your local environment.
-2. Install dependencies using `npm install`.
-3. Set up your PostgreSQL database with the name 'assignment_01' and adjust the database credentials in `database.js` if necessary.
-4. Run the application using `npm start` or `npm run node-start`.
-5. Access the health check endpoint at `http://localhost:8080/healthz`.
+### Build and Deploy Instructions
+To build and deploy the web application locally, follow these steps:
+1. Clone the repository to your local machine.
+2. Navigate to the `webapp/` directory.
+3. Install dependencies using `npm install`.
+4. Run the application using `npm start` or `npm run dev`.
 
-## Dependencies:
+### Branch Protection Rules
+Branch protection rules are set up to ensure code integrity and maintain quality standards. The following rules are implemented:
+- Require pull request reviews before merging.
+- Disallow force-pushes.
+- Require status checks to pass before merging.
 
-- `dotenv`: For loading environment variables.
-- `express`: Web framework for Node.js.
-- `pg`: PostgreSQL client for Node.js.
-- `sequelize`: ORM for Node.js.
-- `nodemon`: Development utility for automatic server restarts.
+### Database Bootstrapping
+The application automatically bootstraps the database at startup using ORM framework Sequelize (for Node.js).
 
-## Scripts:
+### RESTful API Requirements
+- All API request/response payloads are in JSON format.
+- No UI is implemented for the application.
+- API calls return proper HTTP status codes.
+- Token-based authentication is required for accessing authenticated endpoints.
 
-- `start`: Uses nodemon to run the application with automatic restarts on file changes.
-- `node-start`: Runs the application without nodemon.
+### Authentication Requirements
+Users must provide a basic authentication token for API calls to authenticated endpoints. Only token-based authentication is supported.
 
-## Learning Outcomes:
+### Implemented APIs
+- **Create a new user**: Endpoint for creating a user account with email, password, first name, and last name.
+- **Update user information**: Endpoint for updating user account information (first name, last name, password).
+- **Get user information**: Endpoint for retrieving user account information.
 
-- Separation of Concerns
-- File Structure for Node.js application based on Separation of Concerns
-- Currying | Javascript
+### Continuous Integration (CI) with GitHub Actions
+A GitHub Actions workflow is set up to run simple checks (compile code) for each pull request. Pull requests can only be merged if the workflow executes successfully.
 
-## References:
+### Learning Outcome
+By setting up this repository, you will learn:
+- GitHub repository organization and setup.
+- Branch protection rules and their importance in maintaining code quality.
+- API design and authentication using token-based authentication.
+- Continuous integration setup using GitHub Actions.
 
-- [Sequelize](https://sequelize.org/docs/v6/getting-started/)
-- [Node.js Project Architecture](https://blog.logrocket.com/node-js-project-architecture-best-practices/#why-project-architecture-important)
-- [What is an ORM](https://www.freecodecamp.org/news/what-is-an-orm-the-meaning-of-object-relational-mapping-database-tools/)
-- [How to Use PostgreSQL With Sequelize in Node.js](https://medium.com/@ahsankhaleeq10/how-to-use-postgresql-with-sequelize-in-node-js-1bed818c9f02)
-- [req Request Object](https://medium.com/@ganeshsurfs/expressjs-series-what-i-need-to-know-about-the-req-request-object-in-the-route-request-handler-b4aab9e24300)
-- [How strict should I be with rejecting unexpected query parameters](https://security.stackexchange.com/questions/209014/how-strict-should-i-be-in-rejecting-unexpected-query-parameters)
-- [Currying in Javascript](https://blog.logrocket.com/understanding-javascript-currying/)
+### References
+- [Node.js PostgreSQL Tutorial](https://tinloof.com/blog/how-to-create-manage-a-postgres-database-in-node-js-from-scratch-tutorial)
+- [Node Postgres Project Structure](https://node-postgres.com/guides/project-structure)
+- [HTTP Authentication - MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
+- [Prevent Sequelize from Dropping Database](https://stackoverflow.com/questions/20882230/prevent-sequelize-to-drop-database-in-node-js-app)
+- [Sequelize Model Synchronization](https://sequelize.org/docs/v7/models/model-synchronization/)
+- [GitHub: Fork a Repo](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
+- [GitHub: Managing Forking Policy for Your Organization](https://docs.github.com/en/organizations/managing-organization-settings/managing-the-forking-policy-for-your-organization)
+- [CommonJS vs. ES Modules in Node.js](https://blog.logrocket.com/commonjs-vs-es-modules-node-js/)
