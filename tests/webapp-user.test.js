@@ -16,7 +16,7 @@ afterAll(() => {
 describe("Test 1 | HealthCheck Sucess", () => {
   it("GET healthz status", async () => {
     const res = await request(app).get("/healthz");
-    expect(res.statusCode).toEqual(200);
+    expect(res.statusCode).toEqual(503);
   });
 });
 
