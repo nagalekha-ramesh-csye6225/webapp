@@ -20,7 +20,7 @@ after(() => {
 const fname = "Nagalekha";
 const lname = "Ramesh";
 const pass = "Qwerty@123";
-const uname = "ramesh5.na@northeastern.edu"
+const uname = "ramesh9.na@northeastern.edu"
 
 describe("Create an account, and using the GET call, validate account exists", () => {
     it("POST and GET account exists", async () => {
@@ -81,7 +81,7 @@ describe("Update the account and using the GET call, validate the account was up
         assert.strictEqual(getUserAccountInfoRes.statusCode, 200);
         assert.strictEqual(getUserAccountInfoRes.body.first_name, update_first_name);
         assert.strictEqual(getUserAccountInfoRes.body.last_name, update_last_name);
-        // assert.notStrictEqual(getUserAccountInfoRes.account_created, getUserAccountInfoRes.account_updated);
+        assert.notStrictEqual(getUserAccountInfoRes.body.account_created, getUserAccountInfoRes.body.account_updated);
     })
 })
 
