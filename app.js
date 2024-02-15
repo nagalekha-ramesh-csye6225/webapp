@@ -17,7 +17,7 @@ app.use('/v1/user', userRoutes)
 const port = process.env.PORT || 8080;
 
 // If db connection is not there, what happens to this?
-sequelize.sync({force: false})
+sequelize.sync({force: JSON.parse(process.env.DROP_DATABASE) || false})
     .then(() => {
         console.log('Database synchronized successfully!');
     })
