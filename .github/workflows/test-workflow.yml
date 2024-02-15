@@ -1,4 +1,4 @@
-name: CI-Workflow
+name: Test-Workflow
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test-workflow:
     runs-on: ubuntu-latest
 
     env:
@@ -30,8 +30,8 @@ jobs:
             sudo systemctl start postgresql.service
 
             sudo -u postgres psql -c "CREATE DATABASE ${{ secrets.DATABASE_NAME }};"
-            sudo -u postgres psql -c "CREATE USER ${{ secrets.DATABASE_USER }} WITH PASSWORD '${{ secrets.DATABASE_PASSWORD }}';"
-            sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ${{ secrets.DATABASE_NAME }} TO ${{ secrets.DATABASE_USER }};"
+            sudo -u postgres psql -c "CREATE USER ${{ secrets.DATABASE_USERNAME }} WITH PASSWORD '${{ secrets.DATABASE_PASSWORD }}';"
+            sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ${{ secrets.DATABASE_NAME }} TO ${{ secrets.DATABASE_USERNAME}};"
       - name: Use Node.js
         uses: actions/setup-node@v4
       - run: npm install
