@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../app.js");
+const app = require("../../app.js");
 
 let appServer;
 
@@ -10,6 +10,8 @@ beforeAll(() => {
 afterAll(() => {
   appServer.close();
 });
+
+//adding comment for demo pre-test
 
 /* Healthz Test */
 
