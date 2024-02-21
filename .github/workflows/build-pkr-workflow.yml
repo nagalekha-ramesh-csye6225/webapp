@@ -2,7 +2,8 @@ name: Packer Build
 
 on:
   pull_request:
-    branches: [ "main" ]
+    types:
+      - closed
 
 jobs:
   build_packer:
@@ -40,7 +41,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-    # - run: npm run build --if-present
 
     - name: Install dependecies and run tests
       run: | 
@@ -66,22 +66,7 @@ jobs:
       run: cd ../ && zip -r webapp.zip webapp && cd - && cp ../webapp.zip .
 
     - name: Install Packer
-      run: sudo apt install -y packer
-
-
-
-
-    - name: Packer Init
-      run: packer init ./packer
-    
-    - name: Packer Format
-      run: packer fmt -check ./packer
-    
-    - name: Packer Validate
-      run: packer validate ./packer
-
-  
-    
+      run: sudo apt install -y packer    
     
     - name: GCP Authentication
       uses: google-github-actions/auth@v2
