@@ -1,11 +1,11 @@
 require('dotenv').config();
 
 const express = require('express');
-const sequelize = require('./config/database');
-const healthRoutes = require('./routes/healthRoutes');
-const userRoutes = require('./routes/userRoutes')
+const sequelize = require('./src/config/database');
+const healthRoutes = require('./src/routes/healthRoutes');
+const userRoutes = require('./src/routes/userRoutes')
 
-const User = require('./models/user');
+const User = require('./src/models/user');
 
 const app = express();
 
