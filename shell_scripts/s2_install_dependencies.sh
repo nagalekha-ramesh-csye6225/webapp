@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install zip
+# Install unzip
 sudo yum install -y unzip
 
 # Install node.js
@@ -11,7 +11,7 @@ node -v
 npm -v
 
 # Install postgres
-sudo yum install -y postgresql-server postgresql-contrib
-sudo postgresql-setup --initdb
-sudo systemctl start postgresql.service
-sudo systemctl enable postgresql.service
+# sudo yum install -y postgresql-server postgresql-contrib
+# sudo postgresql-setup --initdb
+# sudo systemctl start postgresql.service
+# sudo systemctl enable postgresql.service
