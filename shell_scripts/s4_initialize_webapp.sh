@@ -7,7 +7,7 @@ sudo unzip /tmp/webapp.zip -d /opt/csye6225/
 cd /opt/csye6225/webapp/
 
 # Logging env file
-cat .env
+# cat .env
 
 # Load environment variables
 # source .env || { echo "Failed to load environment variables from .env file."; exit 1; }
