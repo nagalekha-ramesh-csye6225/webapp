@@ -47,14 +47,6 @@ jobs:
         npm install
         npm run test
 
-    - name: Create env
-      run: |
-        touch .env
-        echo "PORT=${{ secrets.PORT }}" >> .env
-        echo "DATABASE_DIALECT=${{ secrets.DATABASE_DIALECT }}" >> .env
-        echo "DROP_DATABASE=${{ secrets.DROP_DATABASE }}" >> .env
-        cat .env
-
     - name: Delete node_modules for faster creation of artifact
       run: rm -r node_modules
 
