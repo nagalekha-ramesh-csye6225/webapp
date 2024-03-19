@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user')
 const { findUserByUsername } = require('../repositories/userRepository');
-const logger = require('../utils/Logger');
+const logger = require('../utils/logger.js');
 
 const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers.authorization;

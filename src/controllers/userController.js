@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const { createUser, updateUserById, findUserByUsername } = require('../repositories/userRepository');
 const Sequelize = require('sequelize')
-const logger = require('../utils/Logger');
+const logger = require('../utils/logger.js');
 
 async function createUserAccount(req, res) {
     const { username, password, first_name, last_name } = req.body;
