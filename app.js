@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const logger = require('./src/utils/Logger');
+
 const express = require('express');
 const sequelize = require('./src/config/database');
 const healthRoutes = require('./src/routes/healthRoutes');
@@ -19,15 +21,15 @@ const port = process.env.PORT || 8080;
 // If db connection is not there, what happens to this?
 sequelize.sync({force: JSON.parse(process.env.DROP_DATABASE) || false})
     .then(() => {
-        console.log('Database synchronized successfully!');
+        logger.info('Database synchronized successfully!');
     })
     .catch(error => {
-        console.error('Error synchronizing database:', error);
+        logger.error('Error synchronizing database:', error);
     });
 
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
+    logger.info(`Server is running on port ${port}`);
 });
 
 module.exports = app;

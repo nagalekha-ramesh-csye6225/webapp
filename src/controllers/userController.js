@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const { createUser, updateUserById, findUserByUsername } = require('../repositories/userRepository');
 const Sequelize = require('sequelize')
+const logger = require('../utils/Logger');
 
 async function createUserAccount(req, res) {
     const { username, password, first_name, last_name } = req.body;
@@ -24,11 +25,12 @@ async function createUserAccount(req, res) {
         res.status(201).json(newUser);
     } catch (error) {
         if(error.name && error.name === 'SequelizeConnectionRefusedError'){
-            console.error('Database connection error: ', error);
+            logger.error('Database connection error:', error);
+
             return res.status(503).send();
         }
         else{
-            console.error('Error creating user:', error);
+            logger.error('Error creating user:', error);
             res.status(500).json({ message: 'Internal server error' });
         }    
     }
@@ -43,11 +45,11 @@ const getUserAccountDetails= (req, res) => {
         res.status(200).json(userJson);
     } catch (error) {
         if(error.name && error.name === 'SequelizeConnectionRefusedError'){
-            console.error('Database connection error: ', error);
+            logger.error('Database connection error:', error);
             return res.status(503).send();
         }
         else{
-            console.error('Error fetching user details:', error);
+            logger.error('Error fetching user details:', error);
             res.status(500).json({ message: 'Internal server error' });
         }   
     }
@@ -57,8 +59,6 @@ const updateUserAccountDetails = async (req, res) => {
     try{
         const authenticatedUser = req.user;
         const { first_name, last_name, password } = req.body;
-
-        console.log(first_name, last_name, password)
 
         // Hash the new password if provided
         let hashedPassword;
@@ -81,11 +81,11 @@ const updateUserAccountDetails = async (req, res) => {
 
     } catch(error) {
         if(error.name && error.name === 'SequelizeConnectionRefusedError'){
-            console.error('Database connection error: ', error);
+            logger.error('Database connection error:', error);
             return res.status(503).send();
         }
         else{
-            console.error('Error updating user details:', error);
+            logger.error('Error updating user details:', error);
             res.status(500).json({ message: 'Internal server error' });
         }   
     }
