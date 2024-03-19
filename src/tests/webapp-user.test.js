@@ -27,7 +27,7 @@ describe("Test 1 | HealthCheck Sucess", () => {
 const firstName = "Nagalekha";
 const lastName = "Ramesh";
 const compliantPassword = "Nagalekha@1";
-const emailId = "nagalekha04@gmail.com";
+const emailId = "nagalekha020@gmail.com";
 
 const generateBasicAuth = (uname, pass) => {
   return "Basic " + Buffer.from(uname + ":" + pass).toString("base64");

@@ -1,5 +1,5 @@
 const { findUserByUsername } = require('../repositories/userRepository');
-const logger = require('../utils/Logger');
+const logger = require('../utils/logger.js');
 
 async function checkUserAlreadyExists(req, res, next) {
     try{

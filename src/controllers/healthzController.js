@@ -1,5 +1,5 @@
 const sequelize = require('../config/database');
-const logger = require('../utils/Logger');
+const logger = require('../utils/logger.js');
 
 exports.healthCheck = async (req, res) => {
     try {
