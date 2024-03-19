@@ -40,6 +40,11 @@ build {
     destination = "/tmp/"
   }
 
+  provisioner "file" {
+    source      = "./packer/config.yaml"
+    destination = "/tmp/"
+  }
+
   provisioner "shell" {
     scripts = [
       "./shell_scripts/s1_os_update.sh",
