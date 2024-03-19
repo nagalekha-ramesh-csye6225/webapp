@@ -1,4 +1,5 @@
 const { findUserByUsername } = require('../repositories/userRepository');
+const logger = require('../utils/Logger');
 
 async function checkUserAlreadyExists(req, res, next) {
     try{
@@ -12,11 +13,11 @@ async function checkUserAlreadyExists(req, res, next) {
         next();
     } catch(error) {
         if(error.name && error.name === 'SequelizeConnectionRefusedError'){
-            console.error('Database connection error: ', error);
+            logger.error('Database connection error:', error);
             return res.status(503).send();
         }
         else{
-            console.error('Error checking if user exists:', error);
+            logger.error('Error checking if user exists:', error);
             res.status(500).json({ message: 'Internal server error' });
         }  
     }
