@@ -7,6 +7,7 @@ async function checkUserAlreadyExists(req, res, next) {
 
         const existingUser = await findUserByUsername(username);
         if (existingUser) {
+            logger.error('User with this email already exists:', username);
             return res.status(400).json({ message: 'User with this email already exists' });
         }
 
