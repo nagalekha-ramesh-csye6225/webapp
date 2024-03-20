@@ -1,11 +1,16 @@
 const User = require('../models/user');
+const logger = require('../utils/logger.js');
 
 async function createUser(userData) {
-    return await User.create(userData);
+    const newUser = await User.create(userData);
+    logger.debug('New user created: ' +  JSON.stringify(newUser, null, 2));
+    return newUser;
 }
 
 async function findUserByUsername(email) {
-    return await User.findOne({ where: { username: email } });
+    const user = await User.findOne({ where: { username: email } });
+    logger.debug('User found: ' +  JSON.stringify(user, null, 2));
+    return user;
 }
 
 async function updateUserById(userId, userData) {
@@ -16,6 +21,7 @@ async function updateUserById(userId, userData) {
     });
 
     // Return the updated user object
+    logger.debug('User updated: ' + JSON.stringify(updatedUser, null, 2));
     return updatedUser;
 }
 

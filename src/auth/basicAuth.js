@@ -1,18 +1,21 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user')
-const { findUserByUsername } = require('../repositories/userRepository')
+const { findUserByUsername } = require('../repositories/userRepository');
+const logger = require('../utils/logger.js');
 
 const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if(!authHeader){
         res.setHeader('WWW-Authenticate', 'Basic');
+        logger.error('Unauthorized: No credentials provided');
         return res.status(401).send();
     }
 
     //enforcing Basic Auth
     if(!authHeader.startsWith('Basic')){
         res.setHeader('WWW-Authenticate', 'Basic');
+        logger.warn('Unauthorized: Invalid authentication method');
         return res.status(401).send();
     }
 
@@ -21,6 +24,7 @@ const authenticateToken = async (req, res, next) => {
     const password = auth[1];
 
     if(!username || !password){
+        logger.error('Unauthorized: Invalid credentials');
         return res.status(401).send();
     }
 
@@ -30,6 +34,7 @@ const authenticateToken = async (req, res, next) => {
 
         if (user === null) {
             // If user not found, return 401 Unauthorized
+            logger.error('Unauthorized: User not found');
             return res.status(401).send({ message: 'Unauthorized: User not found' });
         }
 
@@ -37,7 +42,7 @@ const authenticateToken = async (req, res, next) => {
 
         if (!passwordMatch) {
             // If password doesn't match, return 401 Unauthorized
-
+            logger.error('Unauthorized: Invalid credentials');
             return res.status(401).json({ message: 'Unauthorized: Invalid credentials' });
         }  
 
@@ -46,11 +51,11 @@ const authenticateToken = async (req, res, next) => {
         next();
     } catch (error) {
         if(error.name && error.name === 'SequelizeConnectionRefusedError'){
-            console.error('Database connection error: ', error);
+            logger.error('Database connection error:', error);
             return res.status(503).send();
         }
         else{
-            console.error('Error authenticating user:', error);
+            logger.error('Error authenticating user:', error);
             return res.status(500).json({ message: 'Internal server error' });
         }        
     }

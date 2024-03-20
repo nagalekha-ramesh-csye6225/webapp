@@ -40,6 +40,11 @@ build {
     destination = "/tmp/"
   }
 
+  provisioner "file" {
+    source      = "./packer/config.yaml"
+    destination = "/tmp/"
+  }
+
   provisioner "shell" {
     scripts = [
       "./shell_scripts/s1_os_update.sh",
@@ -73,13 +78,13 @@ variable "src_img_fmly" {
 variable "zone" {
   description = "The zone in which the instance will be created"
   type        = string
-  default     = "us-east1-b"
+  default     = "us-west4-b"
 }
 
 variable "region" {
   description = "The region where the instance will be created"
   type        = string
-  default     = "us-east-1"
+  default     = "us-west4"
 }
 
 variable "ssh_username" {

@@ -36,6 +36,11 @@ jobs:
         sudo -u postgres psql -c "CREATE DATABASE ${{ secrets.DATABASE_NAME }};"
         sudo -u postgres psql -c "CREATE USER ${{ secrets.DATABASE_USERNAME }} WITH PASSWORD '${{ secrets.DATABASE_PASSWORD }}';"
         sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ${{ secrets.DATABASE_NAME }} TO ${{ secrets.DATABASE_USERNAME}};"
+
+    - name: Setup Logger Directory
+      run: |
+          sudo mkdir /var/log/webapp
+          echo "Logger directory created at /var/log/webapp"
     
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
