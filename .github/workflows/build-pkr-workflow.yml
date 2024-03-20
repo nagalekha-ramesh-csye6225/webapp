@@ -2,8 +2,8 @@ name: Packer Build
 
 on:
   pull_request:
-    branches:
-      - main
+    types:
+      - closed
 
 jobs:
   build_packer:
