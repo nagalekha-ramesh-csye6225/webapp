@@ -6,7 +6,7 @@ const customFormat = winston.format((info) => {
 });
 
 const logger = winston.createLogger({
-    format: winston.format.combine(customFormat(), winston.format.json()),
+    format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
     transports: [
       new winston.transports.File({ filename: '/var/log/webapp/webapp.log' }),
       new winston.transports.Console(),
