@@ -51,11 +51,11 @@ const authenticateToken = async (req, res, next) => {
         next();
     } catch (error) {
         if(error.name && error.name === 'SequelizeConnectionRefusedError'){
-            logger.error('Database connection error:', error);
+            logger.error('Database connection error:'+ error);
             return res.status(503).send();
         }
         else{
-            logger.error('Error authenticating user:', error);
+            logger.error('Error authenticating user:'+ error);
             return res.status(500).json({ message: 'Internal server error' });
         }        
     }
