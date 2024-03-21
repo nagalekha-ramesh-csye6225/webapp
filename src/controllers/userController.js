@@ -25,12 +25,12 @@ async function createUserAccount(req, res) {
         res.status(201).json(newUser);
     } catch (error) {
         if(error.name && error.name === 'SequelizeConnectionRefusedError'){
-            logger.error('Database connection error:', error);
+            logger.error('Database connection error:'+ error);
 
             return res.status(503).send();
         }
         else{
-            logger.error('Error creating user:', error);
+            logger.error('Error creating user:'+ error);
             res.status(500).json({ message: 'Internal server error' });
         }    
     }
@@ -45,11 +45,11 @@ const getUserAccountDetails= (req, res) => {
         res.status(200).json(userJson);
     } catch (error) {
         if(error.name && error.name === 'SequelizeConnectionRefusedError'){
-            logger.error('Database connection error:', error);
+            logger.error('Database connection error:'+ error);
             return res.status(503).send();
         }
         else{
-            logger.error('Error fetching user details:', error);
+            logger.error('Error fetching user details:'+ error);
             res.status(500).json({ message: 'Internal server error' });
         }   
     }
@@ -81,11 +81,11 @@ const updateUserAccountDetails = async (req, res) => {
 
     } catch(error) {
         if(error.name && error.name === 'SequelizeConnectionRefusedError'){
-            logger.error('Database connection error:', error);
+            logger.error('Database connection error:'+ error);
             return res.status(503).send();
         }
         else{
-            logger.error('Error updating user details:', error);
+            logger.error('Error updating user details:'+ error);
             res.status(500).json({ message: 'Internal server error' });
         }   
     }

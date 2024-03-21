@@ -8,7 +8,7 @@ exports.healthCheck = async (req, res) => {
         res.status(200).send();
 
     } catch (error) {
-        logger.error('Database connection error:', error);
+        logger.error('Database connection error:'+ error);
         res.status(503).send();
     }
 }
