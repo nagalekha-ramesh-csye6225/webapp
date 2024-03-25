@@ -24,7 +24,7 @@ sequelize.sync({force: JSON.parse(process.env.DROP_DATABASE) || false})
         logger.info('Database synchronized successfully!');
     })
     .catch(error => {
-        logger.error('Error synchronizing database:', error);
+        logger.error('Error synchronizing database:' + error);
     });
 
 
