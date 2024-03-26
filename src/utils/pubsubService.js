@@ -1,7 +1,7 @@
-const PubSub = require('PubSub');
+const PubSub = require('@google-cloud/pubsub');
 const logger = require('./logger.js');
 
-const pubSubClient = new PubSub({});
+const pubSubClient = new PubSub.PubSub({});
 
 const publishMessage = async (topicName, messageData) => {
   try {
