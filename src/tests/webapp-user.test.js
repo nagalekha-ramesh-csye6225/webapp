@@ -1,5 +1,6 @@
 const request = require("supertest");
 const app = require("../../app.js");
+const { findUserById, updateUserById } = require("../repositories/userRepository.js");
 
 let appServer;
 
@@ -48,6 +49,11 @@ describe("Test 2 | Create an account, and using the GET call, validate account e
       .post(userPath)
       .send(createUserRequestBody);
     expect(createUserResponse.statusCode).toEqual(201);
+
+    const createUser = await findUserById(createUserResponse.body.id);
+    const updatedUserData = {};
+    updatedUserData.user_verification_status = true;
+    const updatedUser = await updateUserById(createUser.id, updatedUserData);
 
     const fetchUserResponse = await request(app)
       .get(selfPath)

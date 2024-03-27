@@ -35,7 +35,7 @@ const User = sequelize.define('User', {
         allowNull: false,
         defaultValue: DataTypes.NOW,
     },
-    user: {
+    verification_email_sent_timestamp: {
         type: DataTypes.DATE,
         allowNull: true,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -45,7 +45,8 @@ const User = sequelize.define('User', {
         allowNull: false,
         defaultValue: false,
     }
-}, {
+  }, 
+  {
     tableName: 'users',
     timestamps: false,
     indexes: [
@@ -56,6 +57,7 @@ const User = sequelize.define('User', {
     ],
     updatedAt: 'account_updated', // Map updatedAt to account_updated
     createdAt: 'account_created', // Map createdAt to account_created
-});
+  }
+);
 
 module.exports = User;

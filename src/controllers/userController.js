@@ -108,14 +108,15 @@ const verifyUserAccount = async (req, res) => {
         }
 
         if(user.user_verification_status){
-            return res.status(200).send();
+            logger.warn('User already verified: ' + user.username)
+            return res.status(200).json({message: `${user.username} verified successfully`});
         }
 
         const currentTimestamp = new Date().getTime();
 
         if(currentTimestamp - user.verification_email_sent_timestamp > 120000){
-            logger.warn('Verification link expired for user: ' + user.id);
-            // res.status(403).send();
+            logger.error('Verification link expired for user: ' + user.id);
+            res.status(410).json({ message: `Verification link expired for ${user.username}` });
         } else {
             
             // Prepare the updated user data
@@ -125,10 +126,8 @@ const verifyUserAccount = async (req, res) => {
             const updatedUser = await updateUserById(user.id, updatedUserData);
 
             logger.info('User verified: ' + user.id);
-            // return res.status(200).send();
+            return res.status(200).json({message: `${user.username} verified successfully`});
         }
-        return res.status(200).send();
-
 
     } catch(error) {
         if(error.name && error.name === 'SequelizeConnectionRefusedError'){
