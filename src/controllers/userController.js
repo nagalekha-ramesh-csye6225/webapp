@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const { createUser, updateUserById, findUserByUsername } = require('../repositories/userRepository');
 const Sequelize = require('sequelize')
 const logger = require('../utils/logger.js');
+const publishMessage = require('../utils/pubsubService.js');
 
 async function createUserAccount(req, res) {
     const { username, password, first_name, last_name } = req.body;
@@ -18,6 +19,11 @@ async function createUserAccount(req, res) {
             // account_created: Sequelize.literal('CURRENT_TIMESTAMP'),
             // account_updated: Sequelize.literal('CURRENT_TIMESTAMP')
         });
+
+        await publishMessage(process.env.TOPIC_VERIFY_EMAIL, {
+            id : newUser.id,
+            email : newUser.username
+        })
 
         // Omit password from the response payload
         delete newUser.dataValues.password;
