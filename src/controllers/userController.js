@@ -114,7 +114,7 @@ const verifyUserAccount = async (req, res) => {
 
         const currentTimestamp = new Date().getTime();
 
-        if(currentTimestamp - user.verification_email_sent_timestamp > 120000){
+        if(currentTimestamp - user.verification_email_sent_timestamp > process.env.VERIFY_EMAIL_EXPIRY_MILLISECONDS){
             logger.error('Verification link expired for user: ' + user.id);
             res.status(410).json({ message: `Verification link expired for ${user.username}` });
         } else {
