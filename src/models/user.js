@@ -35,6 +35,11 @@ const User = sequelize.define('User', {
         allowNull: false,
         defaultValue: DataTypes.NOW,
     },
+    verification_token: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        defaultValue: DataTypes.UUIDV4
+    },
     verification_email_sent_timestamp: {
         type: DataTypes.DATE,
         allowNull: true,

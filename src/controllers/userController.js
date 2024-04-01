@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { createUser, updateUserById, findUserByUsername, findUserById } = require('../repositories/userRepository');
+const { createUser, updateUserById, findUserByUsername, findUserById, findUserByToken } = require('../repositories/userRepository');
 const Sequelize = require('sequelize')
 const logger = require('../utils/logger.js');
 const publishMessage = require('../utils/pubsubService.js');
@@ -22,7 +22,7 @@ async function createUserAccount(req, res) {
         });
 
         await publishMessage(process.env.TOPIC_VERIFY_EMAIL, {
-            id : newUser.id,
+            token : newUser.verification_token,
             email : newUser.username
         })
 
@@ -100,9 +100,10 @@ const updateUserAccountDetails = async (req, res) => {
 
 const verifyUserAccount = async (req, res) => {
     try{
-        const { id } = req.params;
+        logger.info('verifyUserAccount: ' + JSON.stringify(req.params));
+        const { id } = req.params;  //params.id = verification_token
 
-        const user = await findUserById(id);
+        const user = await findUserByToken(id);
         if (!user) {
             return res.status(400).json({ message: 'User not found' });
         }
@@ -115,7 +116,7 @@ const verifyUserAccount = async (req, res) => {
         const currentTimestamp = new Date().getTime();
 
         if(currentTimestamp - user.verification_email_sent_timestamp > process.env.VERIFY_EMAIL_EXPIRY_MILLISECONDS){
-            logger.error('Verification link expired for user: ' + user.id);
+            logger.error('Verification link expired for user: ' + user.verification_token);
             res.status(410).json({ message: `Verification link expired for ${user.username}` });
         } else {
             

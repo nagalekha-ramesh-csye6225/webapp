@@ -31,9 +31,16 @@ async function findUserById(userId) {
     return user;
 }
 
+async function findUserByToken(token) {
+    const user = await User.findOne({ where: { verification_token: token } });
+    logger.debug('findUserByToken User ' +  JSON.stringify(user, null, 2));
+    return user;
+}
+
 module.exports = {
     createUser,
     findUserByUsername,
     updateUserById,
-    findUserById
+    findUserById,
+    findUserByToken
 };
