@@ -40,7 +40,7 @@ const User = sequelize.define('User', {
         allowNull: false,
         defaultValue: DataTypes.UUIDV4
     },
-    verification_email_sent_timestamp: {
+    verification_link_expiry_timestamp: {
         type: DataTypes.DATE,
         allowNull: true,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

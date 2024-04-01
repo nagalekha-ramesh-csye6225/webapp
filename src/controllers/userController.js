@@ -100,7 +100,6 @@ const updateUserAccountDetails = async (req, res) => {
 
 const verifyUserAccount = async (req, res) => {
     try{
-        logger.info('verifyUserAccount: ' + JSON.stringify(req.params));
         const { id } = req.params;  //params.id = verification_token
 
         const user = await findUserByToken(id);
@@ -115,9 +114,9 @@ const verifyUserAccount = async (req, res) => {
 
         const currentTimestamp = new Date().getTime();
 
-        if(currentTimestamp - user.verification_email_sent_timestamp > process.env.VERIFY_EMAIL_EXPIRY_MILLISECONDS){
+        if(currentTimestamp < user.verification_link_expiry_timestamp){
             logger.error('Verification link expired for user: ' + user.verification_token);
-            res.status(410).json({ message: `Verification link expired for ${user.username}` });
+            res.status(403).json({ message: `Verification link expired for ${user.username}` });
         } else {
             
             // Prepare the updated user data
