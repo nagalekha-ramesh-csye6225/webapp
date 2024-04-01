@@ -46,6 +46,11 @@ const authenticateToken = async (req, res, next) => {
             return res.status(401).json({ message: 'Unauthorized: Invalid credentials' });
         }  
 
+        if(user.user_verification_status === false){   
+            logger.warn('User is not verified');
+            return res.status(403).json({ message: 'Unauthorized: User not verified' });
+        }
+
         req.user = user;
 
         next();

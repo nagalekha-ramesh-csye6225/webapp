@@ -1,7 +1,7 @@
 const express = require('express');
 const validateUser = require('../middleware/checkUserAlreadyExists');
 const validateCreateUserData = require('../middleware/validateCreateUserData')
-const { createUserAccount, getUserAccountDetails, updateUserAccountDetails } = require('../controllers/userController');
+const { createUserAccount, getUserAccountDetails, updateUserAccountDetails, verifyUserAccount } = require('../controllers/userController');
 const handleMethodNotAllowed = require('../middleware/handleMethodNotAllowed')
 const { authenticateToken } = require('../auth/basicAuth')
 const validateNoQueryParams = require('../middleware/validateNoQueryParams')
@@ -27,5 +27,14 @@ router.options('/self', alterHeadersForUserEndpoints, handleMethodNotAllowed);
 
 router.get('/self', alterHeadersForUserEndpoints, authenticateToken, validateNoQueryParams, getUserAccountDetails);
 router.put('/self', alterHeadersForUserEndpoints, authenticateToken, validateNoQueryParams, validateUpdateUserData, updateUserAccountDetails);
+
+router.head('/verify/:id', alterHeadersForUserEndpoints, handleMethodNotAllowed);
+router.options('/verify/:id', alterHeadersForUserEndpoints, handleMethodNotAllowed);
+router.post('/verify/:id', alterHeadersForUserEndpoints, handleMethodNotAllowed);
+router.put('/verify/:id', alterHeadersForUserEndpoints, handleMethodNotAllowed);
+router.patch('/verify/:id', alterHeadersForUserEndpoints, handleMethodNotAllowed);
+router.delete('/verify/:id', alterHeadersForUserEndpoints, handleMethodNotAllowed);
+
+router.get('/verify/:id', alterHeadersForUserEndpoints, verifyUserAccount);
 
 module.exports = router;

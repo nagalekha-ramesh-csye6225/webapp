@@ -1,8 +1,9 @@
 const bcrypt = require('bcrypt');
-const { createUser, updateUserById, findUserByUsername } = require('../repositories/userRepository');
+const { createUser, updateUserById, findUserByUsername, findUserById } = require('../repositories/userRepository');
 const Sequelize = require('sequelize')
 const logger = require('../utils/logger.js');
 const publishMessage = require('../utils/pubsubService.js');
+const mapUserToUserResponse = require('../mappers/UserMapper.js');
 
 async function createUserAccount(req, res) {
     const { username, password, first_name, last_name } = req.body;
@@ -26,9 +27,9 @@ async function createUserAccount(req, res) {
         })
 
         // Omit password from the response payload
-        delete newUser.dataValues.password;
+        // delete newUser.dataValues.password;
 
-        res.status(201).json(newUser);
+        res.status(201).json(mapUserToUserResponse(newUser));
     } catch (error) {
         if(error.name && error.name === 'SequelizeConnectionRefusedError'){
             logger.error('Database connection error:'+ error);
@@ -46,9 +47,9 @@ const getUserAccountDetails= (req, res) => {
 
     try{
         const userJson = req.user;
-        delete userJson.dataValues.password;
+        // delete userJson.dataValues.password;
     
-        res.status(200).json(userJson);
+        res.status(200).json(mapUserToUserResponse(userJson));
     } catch (error) {
         if(error.name && error.name === 'SequelizeConnectionRefusedError'){
             logger.error('Database connection error:'+ error);
@@ -97,8 +98,52 @@ const updateUserAccountDetails = async (req, res) => {
     }
 }
 
+const verifyUserAccount = async (req, res) => {
+    try{
+        const { id } = req.params;
+
+        const user = await findUserById(id);
+        if (!user) {
+            return res.status(400).json({ message: 'User not found' });
+        }
+
+        if(user.user_verification_status){
+            logger.warn('User already verified: ' + user.username)
+            return res.status(200).json({message: `${user.username} verified successfully`});
+        }
+
+        const currentTimestamp = new Date().getTime();
+
+        if(currentTimestamp - user.verification_email_sent_timestamp > process.env.VERIFY_EMAIL_EXPIRY_MILLISECONDS){
+            logger.error('Verification link expired for user: ' + user.id);
+            res.status(410).json({ message: `Verification link expired for ${user.username}` });
+        } else {
+            
+            // Prepare the updated user data
+            const updatedUserData = {};
+            updatedUserData.user_verification_status = true;
+            
+            const updatedUser = await updateUserById(user.id, updatedUserData);
+
+            logger.info('User verified: ' + user.id);
+            return res.status(200).json({message: `${user.username} verified successfully`});
+        }
+
+    } catch(error) {
+        if(error.name && error.name === 'SequelizeConnectionRefusedError'){
+            logger.error('Database connection error:'+ error);
+            return res.status(503).send();
+        }
+        else{
+            logger.error('Error verifying user:'+ error);
+            res.status(500).json({ message: 'Internal server error' });
+        }   
+    }
+}
+
 module.exports = {
     createUserAccount,
     getUserAccountDetails,
-    updateUserAccountDetails
+    updateUserAccountDetails,
+    verifyUserAccount
 };

@@ -25,8 +25,15 @@ async function updateUserById(userId, userData) {
     return updatedUser;
 }
 
+async function findUserById(userId) {
+    const user = await User.findOne({ where: { id: userId } });
+    logger.debug('findUserById User ' +  JSON.stringify(user, null, 2));
+    return user;
+}
+
 module.exports = {
     createUser,
     findUserByUsername,
-    updateUserById
+    updateUserById,
+    findUserById
 };
