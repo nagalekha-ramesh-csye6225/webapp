@@ -18,8 +18,6 @@ app.use('/v1/user', userRoutes)
 
 const port = process.env.PORT || 8080;
 
-logger.info("Current Timestamp + 120000 : " + (new Date().getTime() + 120000))
-
 // If db connection is not there, what happens to this?
 sequelize.sync({force: JSON.parse(process.env.DROP_DATABASE) || false})
     .then(() => {
