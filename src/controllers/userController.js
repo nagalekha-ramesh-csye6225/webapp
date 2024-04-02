@@ -114,7 +114,7 @@ const verifyUserAccount = async (req, res) => {
 
         const currentTimestamp = new Date().getTime();
 
-        if(currentTimestamp < user.verification_link_expiry_timestamp){
+        if(currentTimestamp > user.verification_link_expiry_timestamp){
             logger.error('Verification link expired for user: ' + user.verification_token);
             res.status(403).json({ message: `Verification link expired for ${user.username}` });
         } else {
