@@ -34,8 +34,8 @@ const generateBasicAuth = (uname, pass) => {
   return "Basic " + Buffer.from(uname + ":" + pass).toString("base64");
 };
 
-const userPath = "/v2/user";
-const selfPath = "/v2/user/self";
+const userPath = "/v1/user";
+const selfPath = "/v1/user/self";
 
 describe("Test 2 | Create an account, and using the GET call, validate account exists", () => {
   it("POST and GET account exists", async () => {

@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/healthz', healthRoutes);
-app.use('/v2/user', userRoutes)
+app.use('/v1/user', userRoutes)
 
 const port = process.env.PORT || 8080;
 
